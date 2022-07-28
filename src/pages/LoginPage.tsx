@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import {useNavigate} from 'react-router-dom'
 import { ButtonCta } from "app/components/ButtonCta";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { login ,authStateSelector} from "features/authentication/authSlice";
-export type authFormData = {
-    username: string,
-    password: string,
-}
-
+import { login, authStateSelector } from "features/authentication/authSlice";
+import { authFormData } from "../app/types";
+import { StyledLink } from "app/components/StyledLink";
 const guestCredentials: authFormData = {
     username: 'reactDev',
     password: 'Sashaboi'
@@ -15,18 +13,19 @@ const guestCredentials: authFormData = {
 
 export const LoginPage = () => {
     const dispatch = useAppDispatch();
-    const authState=useAppSelector(authStateSelector);
+    const authState = useAppSelector(authStateSelector);
     const [formData, setFormData] = useState<authFormData>({
         username: '',
         password: ''
     })
-    useEffect(()=>{
-      if(authState.isAuthenticated){
-        localStorage.setItem('username',authState.username)
-        localStorage.setItem('encodedToken',authState.encodedToken)
-      }
-      return ()=>localStorage.clear()
-    },[authState])
+    useEffect(() => {
+        if (authState.isAuthenticated) {
+            localStorage.setItem('username', authState.username)
+            localStorage.setItem('encodedToken', authState.encodedToken)
+        }
+        return () => localStorage.clear()
+    }, [authState])
+    const navigate=useNavigate()
     return <LoginPageWrapper>
         <Image src='https://res.cloudinary.com/dxdefqayz/image/upload/v1658850576/Socially/Saly-1245_eqly7l_ycbrrw.png' alt='hero-image' />
         <Wrapper>
@@ -40,6 +39,7 @@ export const LoginPage = () => {
                     placeholder="userName"
                     required={true}
                     value={formData.username}
+                    min={18}
                     onChange={(e) => setFormData(state => ({ ...state, username: e.target.value }))} />
                 <label htmlFor="password">Password</label>
                 <Input
@@ -51,27 +51,35 @@ export const LoginPage = () => {
                     onChange={(e) => setFormData(state => ({ ...state, password: e.target.value }))} />
                 <FormButton onClick={(e) => {
                     e.preventDefault()
-                    dispatch(login(formData))
-                    setFormData({username:'',password:''})
+                    if (!formData.username || !formData.password) {
+                        alert('please enter username and password')
+                    } else {
+                        dispatch(login(formData))
+                        setFormData({ username: '', password: '' })
+                        navigate('/home')
+                    }
                 }}
-                    >login</FormButton>
+                >login</FormButton>
                 <OutLinedFormButton onClick={(e) => {
                     e.preventDefault()
-                    setFormData(guestCredentials)}}
-                    >Use guest login</OutLinedFormButton>
+                    setFormData(guestCredentials)
+                }}
+                >Use guest login</OutLinedFormButton>
+                <div>Dont have an account yet ?<StyledLink to='/'>{`Join Socially`}</StyledLink></div>
             </Form>
         </Wrapper>
+
     </LoginPageWrapper>
 }
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
     text-align:center;
 `
-const Brand = styled.span`
+export const Brand = styled.span`
 color:var(--cta)
 `
 
-const LoginPageWrapper = styled.div`
+export const LoginPageWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -83,21 +91,24 @@ const LoginPageWrapper = styled.div`
         align-items: center;
    }
 `
-const FormButton = styled(ButtonCta)`
+export const FormButton = styled(ButtonCta)`
 width:100%;
 margin-top:0.5rem;
 `
-const OutLinedFormButton = styled(FormButton)`
+export const OutLinedFormButton = styled(FormButton)`
  background-color: var(--card-bg);
 `;
-const Image = styled.img`
+export const Image = styled.img`
     border-radius: 4px;
     width: 500px;
     @media  (max-width: 550px) {
         display: none;
    }
+   @media  (max-width: 1100px) {
+        display: none;
+   }
 `
-const Form = styled.form`
+export const Form = styled.form`
     background-color: var(--card-bg);
     width: 350px;
     display: flex;
@@ -111,7 +122,7 @@ const Form = styled.form`
     border:2px solid var(--grey-border)
 
 `
-const Input = styled.input`
+export const Input = styled.input`
     background-color: var(--dark-bg);
     border-radius: 4px;
     padding:0.5rem;
