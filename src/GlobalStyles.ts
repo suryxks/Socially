@@ -3,12 +3,13 @@ import {createGlobalStyle} from 'styled-components'
 export const GlobalStyles=createGlobalStyle`
 :root{
     --dark-bg:#1C1C1C;
-    /* --cta: #3FCF8E; */
     --cta:#7f5af0;
-    --grey-border:#282828;
+     --grey-border:#282828;
     --white:#EDEDED;
     --btn-hover:#8865f1;
     --card-bg:#232323;
+    --gradientone:#696eff;
+    --gridienttwo:#f8acff
 }
 *, *::before, *::after {
   box-sizing: border-box;
