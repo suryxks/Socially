@@ -22,7 +22,7 @@ export const posts = [
     comments: [
       {
         _id: uuid(),
-        username: 'shubhamsoni',
+        username: 'reactDev',
         text: 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
         votes: {
           upvotedBy: [],
@@ -31,7 +31,7 @@ export const posts = [
       },
       {
         _id: uuid(),
-        username: 'sohamshah',
+        username: 'bHolt',
         text: 'Wow!',
         votes: {
           upvotedBy: [],
@@ -55,7 +55,7 @@ export const posts = [
     comments: [
       {
         _id: uuid(),
-        username: 'shubhamsoni',
+        username: 'reactDev',
         text: 'Interesting',
         votes: {
           upvotedBy: [],
@@ -64,7 +64,7 @@ export const posts = [
       },
       {
         _id: uuid(),
-        username: 'sohamshah',
+        username: 'bHolt',
         text: 'Wow!',
         votes: {
           upvotedBy: [],
@@ -82,12 +82,12 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    username: 'shubhamsoni',
+    username: 'reactDev',
 
     comments: [
       {
         _id: uuid(),
-        username: 'shubhamsoni',
+        username: 'reactDev',
         text: 'Interesting',
         votes: {
           upvotedBy: [],
@@ -96,7 +96,7 @@ export const posts = [
       },
       {
         _id: uuid(),
-        username: 'shubhamsoni',
+        username: 'reactDev',
         text: 'WOWOWOW',
         votes: {
           upvotedBy: [],
@@ -105,7 +105,7 @@ export const posts = [
       },
       {
         _id: uuid(),
-        username: 'shubhamsoni',
+        username: 'reactDev',
         text: 'THIS IS INSANE',
         votes: {
           upvotedBy: [],
