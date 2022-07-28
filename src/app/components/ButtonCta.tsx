@@ -4,8 +4,7 @@ export const ButtonCta = styled.button`
     color: var(--white);
     background-color: var(--cta);
     border: 2px solid var(--cta);
-    border-radius:4px;
-  font-weight: 400;
+    border-radius: 0.2rem;
  padding:4px 6px;
  height: fit-content;
  display: flex;

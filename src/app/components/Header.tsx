@@ -1,17 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+import { authStateSelector, logout } from "features/authentication/authSlice";
 import { ButtonCta } from "./ButtonCta";
-export const Header=()=>{
+import { StyledLink } from "./StyledLink";
+
+export const Header = () => {
+    const authState = useAppSelector(authStateSelector)
+    const dispatch = useAppDispatch()
+    const navigate=useNavigate()
+    const { isAuthenticated } = authState;
     return (
-    <HeaderWrapper>
-       <BrandName>Socially</BrandName>
-       <ButtonCta>Sign in</ButtonCta>
-    </HeaderWrapper>)
+        <HeaderWrapper>
+            <StyledLink to='/home'>Socially</StyledLink>
+            <ButtonCta onClick={() => {
+                if (isAuthenticated) {
+                    dispatch(logout())
+                }else{
+                    navigate('/')
+                }
+            }}>{isAuthenticated ? 'logout' : 'Sign in'}</ButtonCta>
+        </HeaderWrapper>)
 }
 
-const HeaderWrapper=styled.nav`
-position: fixed;
-top:0;
+const HeaderWrapper = styled.nav`
+    position: sticky;
+    top:0;
     display: flex;
     border-bottom: 2px solid var(--grey-border);
     width: 100%;
@@ -21,7 +36,7 @@ top:0;
     padding: 0.5rem 1rem;
     grid-area: header;
 `
-const BrandName=styled.h3`
+const BrandName = styled.h3`
     color: var(--cta);
     font-weight: bolder;
     
