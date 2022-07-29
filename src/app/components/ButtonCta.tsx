@@ -14,4 +14,8 @@ export const ButtonCta = styled.button`
     cursor: pointer;
     background-color: var(--btn-hover);
  }
+ &:active{
+   border: 4px solid var(--btn-active);
+   border-radius: 0.2rem;
+ }
 `

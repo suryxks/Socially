@@ -8,8 +8,7 @@ export const GlobalStyles=createGlobalStyle`
     --white:#EDEDED;
     --btn-hover:#8865f1;
     --card-bg:#232323;
-    --gradientone:#696eff;
-    --gridienttwo:#f8acff
+    --btn-active:#6f44ee;
 }
 *, *::before, *::after {
   box-sizing: border-box;
