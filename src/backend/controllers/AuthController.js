@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable object-shorthand */
 import { v4 as uuid } from 'uuid';
 import { Response } from 'miragejs';
@@ -65,7 +67,7 @@ export const signupHandler = function (schema, request) {
  * body contains {username, password}
  * */
 
-export const loginHandler = function (schema, request) {
+ export const loginHandler = function (schema, request) {
   const { username, password } = JSON.parse(request.requestBody);
   try {
     const foundUser = schema.users.findBy({ username: username });
@@ -75,7 +77,7 @@ export const loginHandler = function (schema, request) {
         {},
         {
           errors: [
-            'The username you entered is not Registered. Not Found error',
+            "The username you entered is not Registered. Not Found error",
           ],
         }
       );
@@ -92,7 +94,7 @@ export const loginHandler = function (schema, request) {
       {},
       {
         errors: [
-          'The credentials you entered are invalid. Unauthorized access error.',
+          "The credentials you entered are invalid. Unauthorized access error.",
         ],
       }
     );
