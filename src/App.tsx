@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-// import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Header } from "app/components/Header";
-import { LoginPage } from "pages/LoginPage";
+import { AppRoutes } from "app/Routes";
 import { GlobalStyles } from "GlobalStyles";
-import "./App.css";
+import { getAllPosts } from './features/posts/postsSlice'
+import { authStateSelector, login } from "features/authentication/authSlice";
+import { getUsers } from "features/users/usersSlice";
 
 
 function App() {
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   dispatch(login({ username: 'reactDev', password: 'Sashaboi' }))
-  // }, [])
+  const dispatch = useAppDispatch();
+  const authState = useAppSelector(authStateSelector)
+  useEffect(() => {
+    if (authState.isAuthenticated) {
+      localStorage.setItem('username', authState.username)
+      localStorage.setItem('encodedToken', authState.encodedToken)
+      dispatch(getAllPosts())
+      dispatch(getUsers())
+    }
+    return () => localStorage.clear()
+  }, [authState])
   return (
     <AppWrapper>
-      <Header/>
-       <LoginPage/>
+      <Header />
+      <AppRoutes />
       <GlobalStyles />
     </AppWrapper>
   );
