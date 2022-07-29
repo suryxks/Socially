@@ -7,6 +7,7 @@ import { GlobalStyles } from "GlobalStyles";
 import { getAllPosts } from './features/posts/postsSlice'
 import { authStateSelector, login } from "features/authentication/authSlice";
 import { getUsers } from "features/users/usersSlice";
+import { Toast } from "app/components/Toast";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Header />
       <AppRoutes />
       <GlobalStyles />
+      <Toast/>
     </AppWrapper>
   );
 }

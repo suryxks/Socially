@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { login, authStateSelector } from "features/authentication/authSlice";
 import { authFormData } from "../app/types";
 import { StyledLink } from "app/components/StyledLink";
+import toast from 'react-hot-toast';
 const guestCredentials: authFormData = {
     username: 'reactDev',
     password: 'Sashaboi'
@@ -22,6 +23,8 @@ export const Login = () => {
         if (authState.isAuthenticated) {
             localStorage.setItem('username', authState.username)
             localStorage.setItem('encodedToken', authState.encodedToken)
+            navigate('/home')
+            toast.success('Successfully logged in');
         }
         return () => localStorage.clear()
     }, [authState])
@@ -56,7 +59,7 @@ export const Login = () => {
                     } else {
                         dispatch(login(formData))
                         setFormData({ username: '', password: '' })
-                        navigate('/home')
+                        
                     }
                 }}
                 >login</FormButton>

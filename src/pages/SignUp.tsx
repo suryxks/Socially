@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { signup, authStateSelector } from "features/authentication/authSlice";
 import { signUpdata } from "../app/types";
 import { StyledLink } from "app/components/StyledLink";
-
+import toast from 'react-hot-toast';
 export const SignUp = () => {
     const dispatch = useAppDispatch();
     const authState = useAppSelector(authStateSelector);
@@ -16,8 +16,16 @@ export const SignUp = () => {
         firstname: '',
         lastname: '',
     })
-   
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (authState.isAuthenticated) {
+            localStorage.setItem('username', authState.username)
+            localStorage.setItem('encodedToken', authState.encodedToken)
+            navigate('/home')
+            toast.success('Welcome to socially')
+        }
+        return () => localStorage.clear()
+    }, [authState])
     return <LoginPageWrapper>
         <Wrapper>
             <h1><Brand>Sign Up</Brand></h1>
@@ -65,7 +73,6 @@ export const SignUp = () => {
                     } else {
                         dispatch(signup(formData))
                         setFormData({ username: '', password: '', firstname: '', lastname: '' })
-                        navigate('/home')
                     }
                 }}
                 >SignUp</FormButton>
