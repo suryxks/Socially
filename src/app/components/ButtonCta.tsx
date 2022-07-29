@@ -13,6 +13,7 @@ export const ButtonCta = styled.button`
  &:hover{
     cursor: pointer;
     background-color: var(--btn-hover);
+    border: 2px solid var(--btn-hover);
  }
  &:active{
    border: 4px solid var(--btn-active);

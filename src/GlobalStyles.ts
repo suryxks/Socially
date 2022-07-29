@@ -3,10 +3,12 @@ import {createGlobalStyle} from 'styled-components'
 export const GlobalStyles=createGlobalStyle`
 :root{
     --dark-bg:#1C1C1C;
-    --cta:#7f5af0;
+    /* --cta:#7f5af0; */
+    --cta:#5865F2;
      --grey-border:#282828;
     --white:#EDEDED;
-    --btn-hover:#8865f1;
+    /* --btn-hover:#8865f1; */
+    --btn-hover:#6a72c8;
     --card-bg:#232323;
     --btn-active:#6f44ee;
 }
