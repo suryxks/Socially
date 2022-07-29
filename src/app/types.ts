@@ -1,3 +1,4 @@
+import { signup } from 'features/authentication/authSlice';
 export interface authState {
   userData: user | null;
   username: string;
@@ -19,9 +20,13 @@ export interface user {
   username: string;
   _id: string;
 }
-export interface authApiReturnType {
+export interface authApiReturnValue {
   foundUser: user;
   encodedToken: string;
+}
+export interface signupApiRetunValue{
+    createdUser:user;
+    encodedToken:string;
 }
 export type authFormData = {
   username: string;
@@ -43,4 +48,8 @@ export interface post {
   updatedAt: string;
   username: string;
   _id: string;
+}
+export interface signUpdata extends authFormData {
+    firstname: string,
+    lastname: string,
 }

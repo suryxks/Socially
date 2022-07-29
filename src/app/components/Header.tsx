@@ -7,10 +7,10 @@ import { ButtonCta } from "./ButtonCta";
 import { StyledLink } from "./StyledLink";
 
 export const Header = () => {
-    const authState = useAppSelector(authStateSelector)
+    const auth = useAppSelector(authStateSelector)
     const dispatch = useAppDispatch()
     const navigate=useNavigate()
-    const { isAuthenticated } = authState;
+    const { isAuthenticated } = auth;
     return (
         <HeaderWrapper>
             <StyledLink to='/home'>Socially</StyledLink>

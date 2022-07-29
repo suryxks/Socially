@@ -1,9 +1,9 @@
 import { RootState } from "./../../app/store";
-import { authFormData } from "../../app/types";
+import { authFormData ,authState,authApiReturnValue, signUpdata,signupApiRetunValue } from "../../app/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import axios from "axios";
-import { authState, authApiReturnType } from "../../app/types";
+
 
 const initialState: authState = {
   userData: null,
@@ -17,12 +17,23 @@ export const login = createAsyncThunk(
   async (userDetails: authFormData, thunkAPI) => {
     try {
       const respnse = await axios.post("/api/auth/login", userDetails);
-      return respnse.data as unknown as authApiReturnType;
+      return respnse.data  as authApiReturnValue;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+export const signup=createAsyncThunk(
+  'auth/signup',
+  async(userDetails:signUpdata,thunkAPI)=>{
+    try {
+      const respnse = await axios.post("/api/auth/signup", userDetails);
+      return respnse.data  as signupApiRetunValue;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+)
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -38,7 +49,14 @@ const authSlice = createSlice({
       state.username = foundUser.username;
       state.encodedToken = encodedToken;
       state.isAuthenticated = true;
-    });
+    }),
+    builder.addCase(signup.fulfilled,(state,action)=>{
+     const {createdUser,encodedToken}=action.payload;
+     state.userData=createdUser;
+     state.username = createdUser.username;
+     state.encodedToken = encodedToken;
+     state.isAuthenticated = true;
+    })
   },
 });
 export const { logout } = authSlice.actions;

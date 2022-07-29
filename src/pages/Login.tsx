@@ -11,7 +11,7 @@ const guestCredentials: authFormData = {
     password: 'Sashaboi'
 }
 
-export const LoginPage = () => {
+export const Login = () => {
     const dispatch = useAppDispatch();
     const authState = useAppSelector(authStateSelector);
     const [formData, setFormData] = useState<authFormData>({
@@ -65,7 +65,7 @@ export const LoginPage = () => {
                     setFormData(guestCredentials)
                 }}
                 >Use guest login</OutLinedFormButton>
-                <div>Dont have an account yet ?<StyledLink to='/'>{`Join Socially`}</StyledLink></div>
+                <div>Dont have an account?<StyledLink to='/signup'>{`Join Socially`}</StyledLink></div>
             </Form>
         </Wrapper>
 
