@@ -1,4 +1,3 @@
-import { signup } from 'features/authentication/authSlice';
 export interface authState {
   userData: user | null;
   username: string;
