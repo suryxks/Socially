@@ -6,39 +6,45 @@ export interface authState {
   encodedToken: string;
 }
 export interface user {
-  bio: string;
-  bookmarks: [];
-  createdAt: string;
+  _id: string;
   firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  avatarURL: string;
   followers: [];
   following: [];
+  bookmarks: [];
+  bio: string;
+  website: string;
   id: string;
-  lastName: string;
-  password: string;
-  updatedAt: string;
-  username: string;
-  _id: string;
 }
 export interface authApiReturnValue {
   foundUser: user;
   encodedToken: string;
 }
-export interface signupApiRetunValue{
-    createdUser:user;
-    encodedToken:string;
+export interface signupApiRetunValue {
+  createdUser: user;
+  encodedToken: string;
 }
 export type authFormData = {
   username: string;
   password: string;
 };
 export interface comment {
-  text: string;
-  username: string;
-  votes: { upvotedBy: Array<user>; downvotedBy: Array<user> };
-  _id: string;
+  _id:string,
+  firstName:string,
+  lastName: string,
+  username: string,
+  avatarURL:string,
+  text:string,
+  createdAt: string;
+  votes: { upvotedBy: []; downvotedBy: [] };
 }
 export interface post {
- 
   comments: Array<comment>;
   content: string;
   createdAt: string;
@@ -49,6 +55,6 @@ export interface post {
   _id: string;
 }
 export interface signUpdata extends authFormData {
-    firstname: string,
-    lastname: string,
+  firstname: string;
+  lastname: string;
 }

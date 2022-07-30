@@ -8,8 +8,8 @@ import { authFormData } from "../app/types";
 import { StyledLink } from "app/components/StyledLink";
 import toast from 'react-hot-toast';
 const guestCredentials: authFormData = {
-    username: 'reactDev',
-    password: 'Sashaboi'
+    username: 'johndoe',
+    password: 'johndoe123'
 }
 
 export const Login = () => {

@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable object-shorthand */
-import { v4 as uuid } from 'uuid';
-import { Response } from 'miragejs';
-import { formatDate } from '../utils/authUtils';
-const sign = require('jwt-encode');
+import { v4 as uuid } from "uuid";
+import { Response } from "miragejs";
+import { formatDate } from "../utils/authUtils";
+const sign = require("jwt-encode");
 
 /**
  * All the routes related to Auth are present here.
@@ -18,7 +18,9 @@ const sign = require('jwt-encode');
  * */
 
 export const signupHandler = function (schema, request) {
-  const { username, password, ...rest } = JSON.parse(request.requestBody);
+  const { username, password, firstName, lastName, email } = JSON.parse(
+    request.requestBody
+  );
   try {
     // check if username already exists
     const foundUser = schema.users.findBy({ username: username });
@@ -27,7 +29,7 @@ export const signupHandler = function (schema, request) {
         422,
         {},
         {
-          errors: ['Unprocessable Entity. Username Already Exists.'],
+          errors: ["Unprocessable Entity. Username Already Exists."],
         }
       );
     }
@@ -39,12 +41,18 @@ export const signupHandler = function (schema, request) {
       updatedAt: formatDate(),
       username,
       password,
-      ...rest,
+      firstName,
+      lastName,
+      email,
       followers: [],
       following: [],
       bookmarks: [],
+      bio: "",
+      website: "",
+      avatarURL: "",
     };
     const createdUser = schema.users.create(newUser);
+
     const encodedToken = sign(
       { _id, username },
       process.env.REACT_APP_JWT_SECRET
@@ -67,7 +75,7 @@ export const signupHandler = function (schema, request) {
  * body contains {username, password}
  * */
 
- export const loginHandler = function (schema, request) {
+export const loginHandler = function (schema, request) {
   const { username, password } = JSON.parse(request.requestBody);
   try {
     const foundUser = schema.users.findBy({ username: username });
