@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ButtonCta } from "app/components/ButtonCta";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { login, authStateSelector } from "features/authentication/authSlice";
@@ -19,16 +19,13 @@ export const Login = () => {
         username: '',
         password: ''
     })
+    const navigate = useNavigate()
     useEffect(() => {
         if (authState.isAuthenticated) {
-            localStorage.setItem('username', authState.username)
-            localStorage.setItem('encodedToken', authState.encodedToken)
-            navigate('/home')
             toast.success('Successfully logged in');
+            navigate('/explore')
         }
-        return () => localStorage.clear()
     }, [authState])
-    const navigate=useNavigate()
     return <LoginPageWrapper>
         <Image src='https://res.cloudinary.com/dxdefqayz/image/upload/v1658850576/Socially/Saly-1245_eqly7l_ycbrrw.png' alt='hero-image' />
         <Wrapper>
@@ -60,12 +57,13 @@ export const Login = () => {
                         dispatch(login(formData))
                         setFormData({ username: '', password: '' })
                         
-                    }
+                         }
                 }}
                 >login</FormButton>
                 <OutLinedFormButton onClick={(e) => {
                     e.preventDefault()
                     setFormData(guestCredentials)
+                   
                 }}
                 >Use guest login</OutLinedFormButton>
                 <div>Dont have an account?<StyledLink to='/signup'>{`Join Socially`}</StyledLink></div>
