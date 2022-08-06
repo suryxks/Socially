@@ -1,5 +1,5 @@
 export interface authState {
-  userData: user | null;
+  userData: user |null;
   username: string;
   isAuthenticated: boolean;
   error: string;
@@ -51,10 +51,20 @@ export interface post {
   id: string;
   likes: { likeCount: number; likedBy: Array<user>; dislikedBy: Array<user> };
   updatedAt: string;
+  firstName: string;
+  lastName: string;
   username: string;
+  avatarURL:string,
   _id: string;
 }
 export interface signUpdata extends authFormData {
   firstname: string;
   lastname: string;
+}
+export interface follwingUserData {
+  _id: string,
+  firstName: string,
+  lastName: string,
+  username: string,
+  avatarURL: string,
 }
