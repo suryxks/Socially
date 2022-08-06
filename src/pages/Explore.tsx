@@ -11,12 +11,16 @@ export const Explore = () => {
     const { userData } = auth;
     const following = userData ? userData.following : [];
     const posts: post[] = useAppSelector(state => state.posts.posts)
-    const explorePosts = getExplorePosts(following, posts)
+    let explorePosts:post[]=[];
+    if (userData) {
+        explorePosts = getExplorePosts(following, posts, userData)
+    } 
+
     return (
         <ExploreWrapper>
             <AppNavbar />
             <PostDisplay>{
-                explorePosts.map(post => (
+                explorePosts?.map((post:post) => (
                     <PostCard key={post._id} post={post} />
                 ))
             }</PostDisplay>
