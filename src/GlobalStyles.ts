@@ -3,13 +3,11 @@ import {createGlobalStyle} from 'styled-components'
 export const GlobalStyles=createGlobalStyle`
 :root{
     --dark-bg:#1C1C1C;
-    /* --cta:#7f5af0; */
-    --cta:#5865F2;
+    --cta:#604AF4;
      --grey-border:#282828;
     --white:#EDEDED;
-    /* --btn-hover:#8865f1; */
-    --btn-hover:#6a72c8;
-    --card-bg:#232323;
+    --btn-hover:#4a30f3;
+    --card-bg:#232323; 
     --btn-active:#6f44ee;
 }
 *, *::before, *::after {
@@ -57,14 +55,14 @@ p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 2px;
   color: var(--grey-border);
   }
 ::-webkit-scrollbar-thumb {
   background-color: var(--grey-txt);
   border-radius: 1000px;
-    background-color: var(--cta);
-    border: 2px solid var(--cta);
+  background-color: var(--cta);
+  border: 2px solid var(--cta);
 }
 @media (prefers-reduced-motion: no-preference) {
   html {
