@@ -9,7 +9,7 @@ export const Toast = () => {
         containerClassName=""
         containerStyle={{}}
         toastOptions={{
-            duration: 5000,
+            duration: 2000,
             success: {
                 iconTheme: {
                     primary: 'white',
