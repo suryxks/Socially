@@ -13,7 +13,6 @@ export const getAllPosts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("/api/posts");
-      console.log(response.data);
       return response.data as postsType;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
