@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { authStateSelector, logout } from "features/authentication/authSlice";
 import { ButtonCta } from "./ButtonCta";
@@ -9,7 +10,7 @@ import { StyledLink } from "./StyledLink";
 export const Header = () => {
     const auth = useAppSelector(authStateSelector)
     const dispatch = useAppDispatch()
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const { isAuthenticated } = auth;
     return (
         <HeaderWrapper>
@@ -17,13 +18,12 @@ export const Header = () => {
             <ButtonCta onClick={() => {
                 if (isAuthenticated) {
                     dispatch(logout())
-                }else{
+                } else {
                     navigate('/')
                 }
             }}>{isAuthenticated ? 'logout' : 'Sign in'}</ButtonCta>
         </HeaderWrapper>)
 }
-
 const HeaderWrapper = styled.nav`
     position: sticky;
     top:0;
@@ -35,6 +35,8 @@ const HeaderWrapper = styled.nav`
     justify-content: space-between;
     padding: 0.5rem 1rem;
     grid-area: header;
+    background-color: var(--dark-bg);
+    z-index: 2;
 `
 const BrandName = styled.h3`
     color: var(--cta);
