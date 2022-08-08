@@ -1,5 +1,4 @@
-import { RootState } from "app/store";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { post } from "app/types";
 import axios from "axios";
 
@@ -14,7 +13,6 @@ export const getAllPosts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("/api/posts");
-      console.log(response.data);
       return response.data as postsType;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

@@ -5,7 +5,7 @@ import { Header } from "app/components/Header";
 import { AppRoutes } from "app/Routes";
 import { GlobalStyles } from "GlobalStyles";
 import { getAllPosts } from './features/posts/postsSlice'
-import { authStateSelector, login } from "features/authentication/authSlice";
+import { authStateSelector} from "features/authentication/authSlice";
 import { getUsers } from "features/users/usersSlice";
 import { Toast } from "app/components/Toast";
 

@@ -1,4 +1,3 @@
-import { RootState } from "app/store";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { user } from "../../app/types";
 import axios from "axios";

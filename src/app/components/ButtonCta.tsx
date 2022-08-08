@@ -15,8 +15,8 @@ export const ButtonCta = styled.button`
     background-color: var(--btn-hover);
     border: 2px solid var(--btn-hover);
  }
- &:active{
-   border: 4px solid var(--btn-active);
+ &:focus{
+   outline: 2px solid var(--btn-active);
    border-radius: 0.2rem;
  }
 `
