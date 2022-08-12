@@ -62,7 +62,7 @@ const Nav = styled.nav`
  top:5rem;
  left:5rem;
 `;
-const IconContainer = styled.i`
+export const IconContainer = styled.i`
 font-size: 1.3rem
 ;`
 const ListContainer = styled.ul``;
@@ -89,7 +89,7 @@ list-style: none;
 margin:10px;
 background-color: ${props => props.isactive ? 'var(--cta)' : ''};
 &:hover{
-    background-color: ${props => props.isactive ? 'var(--cta)' : 'var(--btn-hover)'};
+    background-color: ${props => props.isactive ? 'var(--cta)' : 'var(--grey-border)'};
 }
 padding:6px 8px;
 border-radius: 4px;
