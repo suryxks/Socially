@@ -14,7 +14,7 @@ export const Home = () => {
     let relatedPosts;
     if (userData) {
 
-        relatedPosts = getRelatedPosts(following, posts)
+        relatedPosts = getRelatedPosts(following, posts,userData)
     }
     return (
         <PageWrapper>
