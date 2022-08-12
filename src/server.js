@@ -84,7 +84,7 @@ export function makeServer({ environment = "development" } = {}) {
 
       //post comments routes (private)
       this.post("/comments/add/:postId", addPostCommentHandler.bind(this));
-      this.post(
+      this.delete(
         "/comments/edit/:postId/:commentId",
         editPostCommentHandler.bind(this)
       );
@@ -108,9 +108,9 @@ export function makeServer({ environment = "development" } = {}) {
       // user routes (private)
       this.post("users/edit", editUserHandler.bind(this));
       this.get("/users/bookmark", getBookmarkPostsHandler.bind(this));
-      this.post("/users/bookmark/:postId/", bookmarkPostHandler.bind(this));
+      this.post("/users/bookmark/:postId", bookmarkPostHandler.bind(this));
       this.post(
-        "/users/remove-bookmark/:postId/",
+        "/users/remove-bookmark/:postId",
         removePostFromBookmarkHandler.bind(this)
       );
       this.post("/users/follow/:followUserId/", followUserHandler.bind(this));
