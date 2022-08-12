@@ -2,23 +2,28 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Header } from "app/components/Header";
+import { PostModal } from "app/components/PostModal";
 import { AppRoutes } from "app/Routes";
 import { GlobalStyles } from "GlobalStyles";
 import { getAllPosts } from './features/posts/postsSlice'
 import { authStateSelector} from "features/authentication/authSlice";
 import { getUsers } from "features/users/usersSlice";
+import { getAllBookmarks } from "features/bookmarks/bookmarksSlice";
+import { postModalSelector } from "features/modals/modalSlice";
 import { Toast } from "app/components/Toast";
-
 
 function App() {
   const dispatch = useAppDispatch();
   const authState = useAppSelector(authStateSelector)
+  const postModalState = useAppSelector(postModalSelector);
+  const {isOpen,content}=postModalState
   useEffect(() => {
     if (authState.isAuthenticated) {
       localStorage.setItem('username', authState.username)
       localStorage.setItem('encodedToken', authState.encodedToken)
       dispatch(getAllPosts())
       dispatch(getUsers())
+      dispatch(getAllBookmarks(authState.encodedToken))
     }
     return () => localStorage.clear()
   }, [authState])
@@ -27,7 +32,8 @@ function App() {
       <Header />
       <AppRoutes />
       <GlobalStyles />
-      <Toast/>
+      <Toast />
+      <PostModal isOpen={isOpen} content={content}/>
     </AppWrapper>
   );
 }
