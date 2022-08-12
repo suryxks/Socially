@@ -7,7 +7,6 @@ type privateRouteProps = {
 }
 const PrivatRoutes = ({ children }: privateRouteProps) => {
     const { isAuthenticated } = useAppSelector(state => state.auth)
-    console.log(isAuthenticated)
     return isAuthenticated?<>{children}</>:<Navigate to='/' replace/>
 }
 export const AppRoutes = () => {
