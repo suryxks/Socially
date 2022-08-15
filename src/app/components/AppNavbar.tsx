@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import {
     MdOutlineExplore,
     MdExplore,
@@ -44,6 +43,15 @@ export const AppNavbar = () => {
                             </IconContainer>
 
                             <TabName>Profile</TabName>
+                        </StyledNavLink>
+                    </ListItem>
+                    <ListItem isactive={pathname === '/bookmarks'}>
+                        <StyledNavLink to='/bookmarks'>
+                            <IconContainer>
+                                {pathname === '/bookmarks' ? <MdBookmark /> : <MdOutlineBookmarkBorder/>}
+                            </IconContainer>
+
+                            <TabName>Bookmarks</TabName>
                         </StyledNavLink>
                     </ListItem>
                 </ListContainer>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Explore, Login, SignUp, Home, Profile } from '../pages';
+import { Explore, Login, SignUp, Home, Profile ,BookMarks} from '../pages';
 import { useAppSelector } from './hooks';
 type privateRouteProps = {
     children:JSX.Element
@@ -16,5 +16,6 @@ export const AppRoutes = () => {
         <Route path='/home' element={<PrivatRoutes><Home /></PrivatRoutes>} />
         <Route path='/explore' element={<PrivatRoutes><Explore /></PrivatRoutes>} />
         <Route path='/profile' element={<PrivatRoutes><Profile /></PrivatRoutes>} />
+        <Route path='/bookmarks' element={<PrivatRoutes><BookMarks/></PrivatRoutes>} />
     </Routes>)
 }
