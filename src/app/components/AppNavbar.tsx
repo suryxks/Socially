@@ -9,11 +9,15 @@ import {
     MdOutlineBookmarkBorder,
     MdPersonOutline, MdPerson
 } from "react-icons/md";
+import { useAppSelector } from "app/hooks";
+import { RootState } from "app/store";
 type NavLinkProps = {
     isactive: boolean,
 }
 export const AppNavbar = () => {
     const location = useLocation();
+    const profile = useAppSelector((state:RootState )=> state.auth.userData);
+    const userId = profile?._id;
     const { pathname } = location;
     return (
         <NavContainer>
@@ -36,8 +40,8 @@ export const AppNavbar = () => {
                             <TabName>Explore</TabName>
                         </StyledNavLink>
                     </ListItem>
-                    <ListItem isactive={pathname === '/profile'}>
-                        <StyledNavLink to='/profile'>
+                    <ListItem isactive={pathname === `/profile/${userId}`}>
+                        <StyledNavLink to={`/profile/${userId}`}>
                             <IconContainer>
                                 {pathname === '/profile' ? <MdPerson /> : <MdPersonOutline />}
                             </IconContainer>
@@ -48,7 +52,7 @@ export const AppNavbar = () => {
                     <ListItem isactive={pathname === '/bookmarks'}>
                         <StyledNavLink to='/bookmarks'>
                             <IconContainer>
-                                {pathname === '/bookmarks' ? <MdBookmark /> : <MdOutlineBookmarkBorder/>}
+                                {pathname === '/bookmarks' ? <MdBookmark /> : <MdOutlineBookmarkBorder />}
                             </IconContainer>
 
                             <TabName>Bookmarks</TabName>

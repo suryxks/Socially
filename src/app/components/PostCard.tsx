@@ -1,7 +1,8 @@
-import { post } from "app/types";
+import { post} from "app/types";
 import React from "react";
 import styled from "styled-components";
 import Avatar from '@mui/material/Avatar';
+import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegCommentAlt } from 'react-icons/fa';
@@ -9,23 +10,25 @@ import { MdBookmarkBorder, MdBookmark } from 'react-icons/md';
 import { authStateSelector } from "features/authentication/authSlice";
 import { bookMarksSelector, addToBookmarks, removeFromBookmarks } from "features/bookmarks/bookmarksSlice";
 import { likePost, dislikePost } from "features/posts/postsSlice";
+import { RootState } from "app/store";
 
 export const PostCard = (props: { post: post }) => {
-    const { _id: postId, avatarURL, firstName, lastName, username: postedBy, content, likes } = props.post;
+    const { _id: postId, avatarURL, firstName, lastName, username: postedBy, content, likes} = props.post;
     const dispatch = useAppDispatch();
     const authData = useAppSelector(authStateSelector);
-    const bookmarks = useAppSelector(bookMarksSelector)
+    const bookmarks = useAppSelector(bookMarksSelector);
+    const postUserData= useAppSelector((state: RootState) => state.users.users.find(user => user.username === postedBy));
     const { username, encodedToken: token } = authData;
     const { likedBy, likeCount } = likes;
     const isBookmarked = bookmarks.find(post => post._id === postId) ? true : false;
     const isLikedByuser = likedBy.find(user => user.username === username) ? true : false;
     return (
         <PostWrapper key={postId}>
-            <User>
+            <User to={`/profile/${postUserData?._id}`}>
                 <Avatar src={avatarURL} alt={postedBy} />
                 <UserDetailsWrapper>
                     <Name>{`${firstName + " "}${lastName}`}</Name>
-                    <UserName>{`${'@' + postedBy}`}</UserName>
+                    <UserName >{`${'@' + postedBy}`}</UserName>
                 </UserDetailsWrapper>
             </User>
             <PostContent>{content}</PostContent>
@@ -101,13 +104,20 @@ const PostWrapper = styled.article`
 const UserDetailsWrapper = styled.div`
     display: flex;
 `
-const User = styled.div`
+const User = styled(Link)`
     display: flex;
     align-items: center;
-`
+    text-decoration: none;
+    &:visited{
+        color: inherit;
+    }
+    cursor:pointer;
+    color: inherit;
+  `
 const Name = styled.p`
     margin:0 0.5rem;
 `
 const UserName = styled.p`
 color:grey
+
 `;

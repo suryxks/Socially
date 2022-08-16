@@ -1,15 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import Avatar from '@mui/material/Avatar';
+import { useParams, Link } from "react-router-dom";
+import { followUser, unfollowUser } from "features/users/usersSlice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { AppNavbar, PostCard } from "app/components";
+import { AppNavbar, PostCard, ButtonCta } from "app/components";
+import { follwingUserData } from 'app/types'
 import { PageWrapper } from "./Home";
-import { Link } from "react-router-dom";
+
+import { authStateSelector } from "features/authentication/authSlice";
 
 export const Profile = () => {
-    const profile = useAppSelector(state => state.auth.userData)
+    const { userId } = useParams();
+
+    const dispatch = useAppDispatch();
+    const profile = useAppSelector(state => state.users.users.find(user => user._id === userId));
+    const auth = useAppSelector(authStateSelector);
+    const userFollowingData=useAppSelector(state=>state.users.users.find(user=>user._id===auth?.userData?._id))?.following
+    const { encodedToken: token } = auth;
+    const isCurrentUser = profile?._id === auth?.userData?._id;
+    const isUserFollowed = userFollowingData?.find((user: follwingUserData) => user?.username === profile?.username);
     const posts = useAppSelector(state => state.posts)
-    const userPosts=posts.posts.filter(post => post.username === profile?.username)
+    const userPosts = posts.posts.filter(post => post.username === profile?.username);
     return (
         <PageWrapper>
             <AppNavbar />
@@ -18,6 +30,12 @@ export const Profile = () => {
                 <UserDetailsWrapper>
                     <Name>{`${profile?.firstName + " "}${profile?.lastName}`}</Name>
                     <UserName>{`${'@' + profile?.username}`}</UserName>
+                    {
+                        isCurrentUser ?
+                            <ButtonCta onClick={() => { const a=true}}>Edit</ButtonCta> :
+                            isUserFollowed ? <ButtonOuLined onClick={() => { dispatch(unfollowUser({ userId, token })) }}>Unfollow</ButtonOuLined> :
+                                <ButtonCta onClick={() => { dispatch(followUser({ userId, token })) }}>Follow</ButtonCta>
+                    }
                     <UserBio>{profile?.bio}</UserBio>
                     <UserLink href={profile?.website} target='_blank'>{profile?.website}</UserLink>
                     <UserFollowWrapper>
@@ -25,11 +43,17 @@ export const Profile = () => {
                         <UserFowllowLink to='/'><UserFollowCount>{`${profile?.followers.length} `}</UserFollowCount><span>Followers</span></UserFowllowLink>
                     </UserFollowWrapper>
                 </UserDetailsWrapper>
-                {userPosts.map(post => <PostCard post={post} key={post._id } />)}
+
+                {userPosts.map(post => <PostCard post={post} key={post._id} />)}
             </ProfileWrapper>
         </PageWrapper>)
 }
-
+const ButtonOuLined = styled(ButtonCta)`
+background-color: var(--dark-bg);
+&:hover{
+    background-color: var(--dark-bg);
+}
+`
 const ProfileWrapper = styled.div`
     grid-area:content;
     margin: 0rem auto;
