@@ -4,7 +4,6 @@ import axios from "axios";
 
 const initialState: postsType = {
   posts: [],
- 
 };
 type postsType = {
   posts: post[];
@@ -13,6 +12,16 @@ type postRequest = {
   token: string;
   postContent: string;
 };
+interface commentRequest {
+  commentData: { text: string };
+  token: string;
+  postId: string;
+}
+interface deleteComment {
+  token: string;
+  postId: string;
+  commentId: string;
+}
 export const getAllPosts = createAsyncThunk(
   "posts/getallPosts",
   async (_, thunkAPI) => {
@@ -69,6 +78,36 @@ export const dislikePost = createAsyncThunk(
     }
   }
 );
+export const postComment = createAsyncThunk(
+  "posts/addComment",
+  async ({ commentData, token, postId }: commentRequest, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `/api/comments/add/${postId}`,
+        { commentData },
+        { headers: { authorization: token } }
+      );
+      return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+///api/comments/delete/:postId/:commentId
+export const deleteComment = createAsyncThunk(
+  "posts/deleteComment",
+  async ({ token, postId, commentId }: deleteComment, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `/api/comments/delete/${postId}/${commentId}`,
+        { headers: { authorization: token } }
+      );
+      return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -85,6 +124,12 @@ const postsSlice = createSlice({
         state.posts = action.payload.posts;
       })
       .addCase(dislikePost.fulfilled, (state, action) => {
+        state.posts = action.payload.posts;
+      })
+      .addCase(postComment.fulfilled, (state, action) => {
+        state.posts = action.payload.posts;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
         state.posts = action.payload.posts;
       });
   },
