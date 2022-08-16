@@ -17,7 +17,7 @@ type NavLinkProps = {
 export const AppNavbar = () => {
     const location = useLocation();
     const profile = useAppSelector((state:RootState )=> state.auth.userData);
-    const userId = profile?._id;
+    const username = profile?.username;
     const { pathname } = location;
     return (
         <NavContainer>
@@ -40,8 +40,8 @@ export const AppNavbar = () => {
                             <TabName>Explore</TabName>
                         </StyledNavLink>
                     </ListItem>
-                    <ListItem isactive={pathname === `/profile/${userId}`}>
-                        <StyledNavLink to={`/profile/${userId}`}>
+                    <ListItem isactive={pathname === `/profile/${username}`}>
+                        <StyledNavLink to={`/profile/${username}`}>
                             <IconContainer>
                                 {pathname === '/profile' ? <MdPerson /> : <MdPersonOutline />}
                             </IconContainer>
