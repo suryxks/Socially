@@ -81,7 +81,7 @@ export const createPostHandler = function (schema, request) {
     const { postData } = JSON.parse(request.requestBody);
     const post = {
       _id: uuid(),
-      ...postData,
+      content: postData,
       likes: {
         likeCount: 0,
         likedBy: [],
@@ -193,7 +193,7 @@ export const likePostHandler = function (schema, request) {
 
     post.likes.likeCount += 1;
 
-    post.likes.likedBy.push(user);
+    post.likes.likedBy.push({...user, bookmarks: []});
 
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
 
@@ -252,7 +252,7 @@ export const dislikePostHandler = function (schema, request) {
     const updatedLikedBy = post.likes.likedBy.filter(
       (currUser) => currUser.username !== user.username
     );
-    post.likes.dislikedBy.push(user);
+    post.likes.dislikedBy.push({...user, bookmarks: []});
     post = { ...post, likes: { ...post.likes, likedBy: updatedLikedBy } };
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });

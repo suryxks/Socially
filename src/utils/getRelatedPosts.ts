@@ -1,15 +1,24 @@
-import { follwingUserData, post } from "app/types";
+import { follwingUserData, post, user } from "app/types";
 
-export   const getRelatedPosts = (following: follwingUserData[], posts: post[]) => {
-    const postsCopy = [...posts];
-    const followingCopy = [...following];
-    const relatedPosts = postsCopy.reduce((accumulator: post[], currentPost: post) => {
-        const ifUserFollowed = followingCopy.find(user => user.username === currentPost.username)
-        if (ifUserFollowed) {
-            accumulator = [...accumulator, currentPost]
-            return accumulator
-        }
+export const getRelatedPosts = (
+  following: follwingUserData[],
+  posts: post[],
+  userData: user
+) => {
+  const postsCopy = [...posts];
+  const followingCopy = [...following];
+  const relatedPosts = postsCopy.reduce(
+    (accumulator: post[], currentPost: post) => {
+      const ifUserFollowed = followingCopy.find(
+        (user) => user.username === currentPost.username
+      );
+      if (ifUserFollowed || currentPost.username === userData.username) {
+        accumulator = [...accumulator, currentPost];
         return accumulator;
-    }, [])
-    return relatedPosts;
-}
+      }
+      return accumulator;
+    },
+    []
+  );
+  return relatedPosts;
+};
