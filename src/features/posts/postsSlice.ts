@@ -78,6 +78,20 @@ export const dislikePost = createAsyncThunk(
     }
   }
 );
+export const deletePost = createAsyncThunk(
+  "posts/delete",
+  async ({ token, postId }: { token: string; postId: string }, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/posts/${postId}`,
+        { headers: { authorization: token } }
+      );
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const postComment = createAsyncThunk(
   "posts/addComment",
   async ({ commentData, token, postId }: commentRequest, thunkAPI) => {
@@ -130,6 +144,8 @@ const postsSlice = createSlice({
         state.posts = action.payload.posts;
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
+        state.posts = action.payload.posts;
+      }).addCase(deletePost.fulfilled, (state, action) => {
         state.posts = action.payload.posts;
       });
   },

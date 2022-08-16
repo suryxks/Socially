@@ -9,11 +9,11 @@ import { FaRegCommentAlt } from 'react-icons/fa';
 import { MdBookmarkBorder, MdBookmark, MdMoreVert } from 'react-icons/md';
 import { authStateSelector } from "features/authentication/authSlice";
 import { bookMarksSelector, addToBookmarks, removeFromBookmarks } from "features/bookmarks/bookmarksSlice";
-import { likePost, dislikePost } from "features/posts/postsSlice";
+import { likePost, dislikePost, deletePost } from "features/posts/postsSlice";
 import { RootState } from "app/store";
 
 export const PostCard = (props: { post: post }) => {
-    const { _id: postId, avatarURL, firstName, lastName, username: postedBy, content, likes,comments } = props.post;
+    const { _id: postId, avatarURL, firstName, lastName, username: postedBy, content, likes, comments } = props.post;
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const authData = useAppSelector(authStateSelector);
@@ -26,14 +26,18 @@ export const PostCard = (props: { post: post }) => {
     return (
         <PostWrapper key={postId} onClick={() => { navigate(`/posts/${postId}`) }}>
             <FlexContainer>
-                <User to={`/profile/${postUserData?.username}`} onClick={(e)=>{e.stopPropagation()}}>
+                <User to={`/profile/${postUserData?.username}`} onClick={(e) => { e.stopPropagation() }}>
                     <Avatar src={avatarURL} alt={postedBy} />
                     <UserDetailsWrapper>
                         <Name>{`${firstName + " "}${lastName}`}</Name>
                         <UserName >{`${'@' + postedBy}`}</UserName>
                     </UserDetailsWrapper>
                 </User>
-                <MoreIcon />
+                {username === postedBy ? <DeleteButton
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        dispatch(deletePost({ token, postId }))
+                    }}>delete</DeleteButton> : null}
             </FlexContainer>
             <PostContent>{content}</PostContent>
             <PostActions>
@@ -71,6 +75,17 @@ export const PostCard = (props: { post: post }) => {
             </PostActions>
         </PostWrapper>)
 }
+const DeleteButton = styled.button`
+background-color: var(--card-bg);
+border:none;
+color:var(--cta);
+font-weight: bold;
+margin-left: auto;
+&:hover{
+    cursor: pointer;
+    color:var(--btn-hover)
+}
+`
 const FlexContainer = styled.div`
     display: flex;
     align-items: center;

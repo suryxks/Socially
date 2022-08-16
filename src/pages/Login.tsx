@@ -23,7 +23,7 @@ export const Login = () => {
     useEffect(() => {
         if (authState.isAuthenticated) {
             toast.success('Successfully logged in');
-            navigate('/explore')
+            navigate('/home')
         }
     }, [authState])
     return <LoginPageWrapper>
