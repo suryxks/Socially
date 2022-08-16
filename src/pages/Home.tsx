@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AppNavbar, PostCard } from 'app/components';
+import { AppNavbar, FoLLowUserSuggestion, PostCard } from 'app/components';
 import { PostDisplay } from './Explore';
 import { useAppSelector } from 'app/hooks';
 import { post } from 'app/types';
@@ -24,13 +24,14 @@ export const Home = () => {
                     <PostCard post={post} key={post._id} />
                 )}
             </PostDisplay>
+            <FoLLowUserSuggestion/>
         </PageWrapper>);
 }
 
 export const PageWrapper = styled.div`
 display: grid;
 overflow-y: auto;
-grid-template-columns: 2fr 10fr;
+grid-template-columns: 2fr 5fr 3fr;
 grid-template-areas: 
-"navbar content"
+"navbar content suggestion"
 `;

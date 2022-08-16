@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { AppNavbar, PostCard } from 'app/components';
+import { AppNavbar, PostCard,FoLLowUserSuggestion } from 'app/components';
 import { getExplorePosts } from 'utils';
 import styled from 'styled-components';
 import { post } from 'app/types';
@@ -24,6 +24,7 @@ export const Explore = () => {
                     <PostCard key={post._id} post={post} />
                 ))
             }</PostDisplay>
+            <FoLLowUserSuggestion/>
         </ExploreWrapper>
     )
 }
@@ -31,9 +32,9 @@ export const Explore = () => {
 const ExploreWrapper = styled.div`
 display: grid;
 overflow-y: auto;
-grid-template-columns: 2fr 10fr;
+grid-template-columns: 2fr 5fr 3fr;
 grid-template-areas: 
-"navbar content"
+"navbar content suggestion"
 ;
 `
 export const PostDisplay = styled.section`
