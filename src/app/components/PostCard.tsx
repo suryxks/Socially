@@ -2,56 +2,108 @@ import { post } from "app/types";
 import React from "react";
 import styled from "styled-components";
 import Avatar from '@mui/material/Avatar';
+import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegCommentAlt } from 'react-icons/fa';
-import { MdBookmarkBorder, MdBookmark } from 'react-icons/md';
+import { MdBookmarkBorder, MdBookmark, MdMoreVert } from 'react-icons/md';
 import { authStateSelector } from "features/authentication/authSlice";
 import { bookMarksSelector, addToBookmarks, removeFromBookmarks } from "features/bookmarks/bookmarksSlice";
-import { likePost, dislikePost } from "features/posts/postsSlice";
+import { likePost, dislikePost, deletePost } from "features/posts/postsSlice";
+import { RootState } from "app/store";
 
 export const PostCard = (props: { post: post }) => {
-    const { _id: postId, avatarURL, firstName, lastName, username: postedBy, content, likes } = props.post;
+    const { _id: postId, avatarURL, firstName, lastName, username: postedBy, content, likes, comments } = props.post;
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const authData = useAppSelector(authStateSelector);
-    const bookmarks = useAppSelector(bookMarksSelector)
+    const bookmarks = useAppSelector(bookMarksSelector);
+    const postUserData = useAppSelector((state: RootState) => state.users.users.find(user => user.username === postedBy));
     const { username, encodedToken: token } = authData;
     const { likedBy, likeCount } = likes;
     const isBookmarked = bookmarks.find(post => post._id === postId) ? true : false;
     const isLikedByuser = likedBy.find(user => user.username === username) ? true : false;
     return (
-        <PostWrapper key={postId}>
-            <User>
-                <Avatar src={avatarURL} alt={postedBy} />
-                <UserDetailsWrapper>
-                    <Name>{`${firstName + " "}${lastName}`}</Name>
-                    <UserName>{`${'@' + postedBy}`}</UserName>
-                </UserDetailsWrapper>
-            </User>
+        <PostWrapper key={postId} onClick={() => { navigate(`/posts/${postId}`) }}>
+            <FlexContainer>
+                <User to={`/profile/${postUserData?.username}`} onClick={(e) => { e.stopPropagation() }}>
+                    <Avatar src={avatarURL} alt={postedBy} />
+                    <UserDetailsWrapper>
+                        <Name>{`${firstName + " "}${lastName}`}</Name>
+                        <UserName >{`${'@' + postedBy}`}</UserName>
+                    </UserDetailsWrapper>
+                </User>
+                {username === postedBy ? <DeleteButton
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        dispatch(deletePost({ token, postId }))
+                    }}>delete</DeleteButton> : null}
+            </FlexContainer>
             <PostContent>{content}</PostContent>
             <PostActions>
                 < ActionContainer>
-                    {isLikedByuser ? (<LikeFilled onClick={() => { dispatch(dislikePost({ token, postId })) }} />)
-                        : (<Like onClick={() => { dispatch(likePost({ token, postId })) }} />)}
+                    {isLikedByuser ? (<LikeFilled
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            dispatch(dislikePost({ token, postId }))
+                        }} />)
+                        : (<Like
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(likePost({ token, postId }))
+                            }} />)}
                     <Span>{likeCount > 0 ? likeCount : ''}</Span>
                 </ActionContainer>
                 <ActionContainer>
                     <CommentIcon />
+                    <Span>{comments.length > 0 ? comments.length : ''}</Span>
                 </ActionContainer>
                 <ActionContainer>
                     {isBookmarked ?
-                        <BookmarkFilled onClick={() => { dispatch(removeFromBookmarks({ token, postId })) }} /> :
-                        <BookMarkIcon onClick={() => { dispatch(addToBookmarks({ token, postId })) }} />
+                        <BookmarkFilled
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(removeFromBookmarks({ token, postId }))
+                            }} /> :
+                        <BookMarkIcon
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                dispatch(addToBookmarks({ token, postId }))
+                            }} />
                     }
                 </ActionContainer>
             </PostActions>
         </PostWrapper>)
 }
+const DeleteButton = styled.button`
+background-color: var(--card-bg);
+border:none;
+color:var(--cta);
+font-weight: bold;
+margin-left: auto;
+&:hover{
+    cursor: pointer;
+    color:var(--btn-hover)
+}
+`
+const FlexContainer = styled.div`
+    display: flex;
+    align-items: center;
+`
 const ActionContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     gap:5px;
+`
+const MoreIcon = styled(MdMoreVert)`
+ font-size: 1.3rem;
+ margin-left: auto;
+ border-radius: 50%;
+ cursor:pointer;
+ &:hover{
+    background-color: var(--grey-border);
+ }
 `
 const Span = styled.span``;
 const Like = styled(AiOutlineHeart)`
@@ -70,7 +122,6 @@ const LikeFilled = styled(AiFillHeart)`
     margin-left: 1rem;
     color:red;
     cursor: pointer;
-    transform: transition;
     `
 const CommentIcon = styled(FaRegCommentAlt)`
     font-size: 1.3rem;
@@ -97,17 +148,26 @@ const PostWrapper = styled.article`
     justify-content: center;
     margin: 1rem;
     padding: 1rem;
+    cursor: pointer;
+    min-width: 650px;
 `
 const UserDetailsWrapper = styled.div`
     display: flex;
 `
-const User = styled.div`
+const User = styled(Link)`
     display: flex;
     align-items: center;
-`
+    text-decoration: none;
+    &:visited{
+        color: inherit;
+    }
+    cursor:pointer;
+    color: inherit;
+  `
 const Name = styled.p`
     margin:0 0.5rem;
 `
 const UserName = styled.p`
 color:grey
+
 `;

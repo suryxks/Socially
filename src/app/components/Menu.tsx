@@ -1,18 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { IconContainer } from "./AppNavbar";
-import { logout } from "features/authentication/authSlice";
+import { authStateSelector, logout } from "features/authentication/authSlice";
 import { MdLogout, MdPersonOutline } from 'react-icons/md'
 type menuProps = {
     isActive: boolean,
     setIsActive: (state: boolean) => void,
 }
 export const Menu = ({ isActive, setIsActive }: menuProps) => {
+    const navigate = useNavigate();
+    const auth = useAppSelector(authStateSelector);
+    const { username } = auth;
     const dispatch = useAppDispatch()
     return isActive ? (
         <MenuContainer>
-            <MenuItem><IconContainer><MdPersonOutline /></IconContainer><MenuContent>Profile</MenuContent></MenuItem>
+            <MenuItem onClick={() => {
+                navigate(`/profile/${username}`)
+                setIsActive(false)
+            }}><IconContainer><MdPersonOutline /></IconContainer><MenuContent>Profile</MenuContent></MenuItem>
             <MenuItem onClick={() => {
                 dispatch(logout())
                 setIsActive(false)

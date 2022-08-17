@@ -5,7 +5,7 @@ export const ButtonCta = styled.button`
     background-color: var(--cta);
     border: 2px solid var(--cta);
     border-radius: 0.2rem;
- padding:4px 6px;
+    padding:2px 6px;
  height: fit-content;
  display: flex;
  align-items: center;

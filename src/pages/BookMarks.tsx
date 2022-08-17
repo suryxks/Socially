@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { AppNavbar, PostCard } from 'app/components';
-import { getExplorePosts } from 'utils';
+import { EmptyState } from './Explore';
 import styled from 'styled-components';
 import { post } from 'app/types';
 
@@ -15,9 +15,10 @@ export const BookMarks = () => {
         <BookMarksWrapper>
             <AppNavbar />
             <PostDisplay>{
-                bookmarks.map((post: post) => (
-                    <PostCard key={post._id} post={post} />
-                ))
+                bookmarks.length > 0 ?
+                    bookmarks.map((post: post) => (
+                        <PostCard key={post._id} post={post} />
+                    )) : <EmptyState>You dont have any Bookmarks</EmptyState>
             }</PostDisplay>
         </BookMarksWrapper>
     )

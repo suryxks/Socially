@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Header } from "app/components/Header";
 import { PostModal } from "app/components/PostModal";
 import { AppRoutes } from "app/Routes";
+import { EditModal } from "app/components";
 import { GlobalStyles } from "GlobalStyles";
 import { getAllPosts } from './features/posts/postsSlice'
 import { authStateSelector} from "features/authentication/authSlice";
@@ -16,24 +17,29 @@ function App() {
   const dispatch = useAppDispatch();
   const authState = useAppSelector(authStateSelector)
   const postModalState = useAppSelector(postModalSelector);
-  const {isOpen,content}=postModalState
+  const editModalState = useAppSelector(state => state.modal.editProfile);
+  const { isOpen, content } = postModalState;
+  const { userData } = authState;
+  const website = userData?userData.website:'';
+  const bio = userData?userData.bio:'';
   useEffect(() => {
     if (authState.isAuthenticated) {
+      
       localStorage.setItem('username', authState.username)
       localStorage.setItem('encodedToken', authState.encodedToken)
       dispatch(getAllPosts())
       dispatch(getUsers())
       dispatch(getAllBookmarks(authState.encodedToken))
     }
-    return () => localStorage.clear()
-  }, [authState])
+  }, [authState.isAuthenticated])
   return (
     <AppWrapper>
       <Header />
       <AppRoutes />
       <GlobalStyles />
       <Toast />
-      <PostModal isOpen={isOpen} content={content}/>
+      <PostModal isOpen={isOpen} content={content} />
+      <EditModal isOpen={editModalState.isOpen} website={website} bio={bio}/>
     </AppWrapper>
   );
 }
