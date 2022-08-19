@@ -39,6 +39,18 @@ grid-template-columns: 2fr 5fr 3fr;
 grid-template-areas: 
 "navbar content suggestion"
 ;
+@media (max-width: 550px){
+    grid-template-areas: 
+    "content content",
+    "navbar navbar"
+}
+
+
+@media(max-width:1100px) {
+    grid-template-areas: 
+    "content content",
+    "navbar navbar";
+}
 `
 export const EmptyState = styled.div`
     border:4px dashed var(--grey-border);
@@ -52,6 +64,11 @@ export const EmptyState = styled.div`
     font-weight: bold;
     margin: 1rem;
     padding: 1rem;
+    @media(max-width:1100px),(min-width:550px){
+        max-width: 350px;
+        width: 350px;
+        min-width: 350px;
+    }
 `
 export const PostDisplay = styled.section`
 grid-area:content;

@@ -16,7 +16,7 @@ type NavLinkProps = {
 }
 export const AppNavbar = () => {
     const location = useLocation();
-    const profile = useAppSelector((state:RootState )=> state.auth.userData);
+    const profile = useAppSelector((state: RootState) => state.auth.userData);
     const username = profile?.username;
     const { pathname } = location;
     return (
@@ -66,6 +66,16 @@ const NavContainer = styled.div`
     position: fixed;
     top:5rem;
     left:2rem;
+    grid-area: navbar;
+    background-color: var(--dark-bg);
+    z-index: 9;
+   @media(max-width:550px),(max-width: 1100px){
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100%;
+   }
 `
 const Nav = styled.nav`
  margin: 1rem 3rem;
@@ -73,14 +83,33 @@ const Nav = styled.nav`
  position: sticky;
  top:5rem;
  left:5rem;
+ @media(max-width:550px),(max-width: 1100px){
+    margin:0;
+   }
 `;
 export const IconContainer = styled.i`
 font-size: 1.3rem
 ;`
-const ListContainer = styled.ul``;
+const ListContainer = styled.ul`
+ @media (max-width: 550px),(max-width:1100px) {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      
+}
+
+`;
 
 const TabName = styled.div`
 margin-left:1.5rem ;
+@media (max-width: 550px){
+  display: none;
+}
+
+
+@media(max-width:1100px) {
+    margin: 0 auto;
+}
 `
 const StyledNavLink = styled(Link)`
     width: 200px;
@@ -88,11 +117,27 @@ const StyledNavLink = styled(Link)`
     text-decoration: none;
     display: flex;
     align-items: center;
+    @media (max-width: 550px){
+        width: max-content;
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media(max-width:1100px){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
    
  &:visited{
     text-decoration: none;
     color:var(--white);
  }
+
 `
 
 const ListItem = styled.li<NavLinkProps>`
@@ -105,4 +150,20 @@ background-color: ${props => props.isactive ? 'var(--cta)' : ''};
 }
 padding:6px 8px;
 border-radius: 4px;
+max-width: fit-content;
+@media (max-width: 550px){
+  /* display: none; */
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media(max-width:1100px)and(min-width:550px){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 `;

@@ -72,6 +72,9 @@ const ListWrapper = styled.div`
     position: fixed;
     top:5rem;
     right:2rem;
+    @media(max-width:1100px),(min-width:550px){
+        display: none;
+    }
 `
 const ListHeader = styled.h3``
 const ListContainer = styled.div`

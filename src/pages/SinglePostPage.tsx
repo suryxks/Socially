@@ -123,6 +123,18 @@ const CommentsContainer = styled.div`
     /* align-items: center; */
     justify-content: center;
     flex-direction: column;
+    @media (max-width: 550px){
+      min-width: 350px;
+      max-width: 350px;
+      width: 350px;
+}
+
+
+@media(max-width:1100px)and(min-width:551px) {
+    min-width: 550px;
+      max-width: 550px;
+      width: 550px;
+}
 `
 const Label = styled.label`
     font-size: 1.3rem;
@@ -144,7 +156,19 @@ display: grid;
 overflow-y: auto;
 grid-template-columns: 2fr 10fr;
 grid-template-areas: 
-"navbar content"
+"navbar content";
+@media (max-width: 550px){
+    grid-template-areas: 
+    "content content",
+    "navbar navbar"
+}
+
+
+@media(max-width:1100px) {
+    grid-template-areas: 
+    "content content",
+    "navbar navbar";
+}
 ;
 `
 export const PostDisplay = styled.section`

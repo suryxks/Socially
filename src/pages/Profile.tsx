@@ -63,7 +63,19 @@ display: grid;
 overflow-y: auto;
 grid-template-columns: 2fr 10fr;
 grid-template-areas: 
-"navbar content"
+"navbar content";
+@media (max-width: 550px){
+    grid-template-areas: 
+    "content suggestion",
+    "navbar navbar"
+}
+
+
+@media(max-width:1100px) {
+    grid-template-areas: 
+    "content suggestion",
+    "navbar navbar";
+}
 `
 const ButtonOuLined = styled(ButtonCta)`
 background-color: var(--dark-bg);

@@ -150,6 +150,18 @@ const PostWrapper = styled.article`
     padding: 1rem;
     cursor: pointer;
     min-width: 650px;
+    @media (max-width: 550px){
+        width: 350px;
+         max-width: 350px;
+         min-width: 350px;
+}
+
+
+@media(max-width:1100px)and(min-width:550px){
+    width: 550px;
+         max-width: 550px;
+         min-width: 550px;
+}
 `
 const UserDetailsWrapper = styled.div`
     display: flex;
