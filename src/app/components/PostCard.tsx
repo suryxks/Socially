@@ -141,7 +141,8 @@ const PostActions = styled.div`
     justify-content:space-between;
 `
 const PostWrapper = styled.article`
-    max-width: 650px;
+    /* max-width: 650px; */
+    width: 90%;
     background-color: var(--card-bg);
     border: 2px solid var(--grey-border);
     border-radius: 8px;
@@ -149,8 +150,8 @@ const PostWrapper = styled.article`
     margin: 1rem;
     padding: 1rem;
     cursor: pointer;
-    min-width: 650px;
-    @media (max-width: 550px){
+    /* min-width: 650px; */
+    /* @media (max-width: 550px){
         width: 350px;
          max-width: 350px;
          min-width: 350px;
@@ -161,7 +162,7 @@ const PostWrapper = styled.article`
     width: 550px;
          max-width: 550px;
          min-width: 550px;
-}
+} */
 `
 const UserDetailsWrapper = styled.div`
     display: flex;

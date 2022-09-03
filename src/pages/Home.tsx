@@ -41,7 +41,7 @@ grid-template-areas:
 }
 
 
-@media(max-width:1100px) {
+@media(max-width:1100px)and(min-width:551px) {
     grid-template-areas: 
     "content suggestion",
     "navbar navbar";
