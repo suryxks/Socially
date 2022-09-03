@@ -14,7 +14,7 @@ export const Home = () => {
     let relatedPosts;
     if (userData) {
 
-        relatedPosts = getRelatedPosts(following, posts,userData)
+        relatedPosts = getRelatedPosts(following, posts, userData)
     }
     return (
         <PageWrapper>
@@ -24,7 +24,7 @@ export const Home = () => {
                     <PostCard post={post} key={post._id} />
                 )}
             </PostDisplay>
-            <FoLLowUserSuggestion/>
+            <FoLLowUserSuggestion />
         </PageWrapper>);
 }
 
@@ -33,5 +33,17 @@ display: grid;
 overflow-y: auto;
 grid-template-columns: 2fr 5fr 3fr;
 grid-template-areas: 
-"navbar content suggestion"
+"navbar content suggestion";
+@media (max-width: 550px){
+    grid-template-areas: 
+    "content suggestion",
+    "navbar navbar"
+}
+
+
+@media(max-width:1100px) {
+    grid-template-areas: 
+    "content suggestion",
+    "navbar navbar";
+}
 `;
