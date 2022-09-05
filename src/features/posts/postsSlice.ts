@@ -1,6 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { post } from "app/types";
-import axios from "axios";
+import { commentRequest, post, postRequest, deleteCommentRequest } from "app/types";
+import {
+  likePostService,
+  dislikePostService,
+  deletePostService,
+  getPostsService,
+  addCommentService,
+  deleteCommentService,
+  createPostService
+} from "services/postServices/postActionServices";
+
 
 const initialState: postsType = {
   posts: [],
@@ -8,25 +17,12 @@ const initialState: postsType = {
 type postsType = {
   posts: post[];
 };
-type postRequest = {
-  token: string;
-  postContent: string;
-};
-interface commentRequest {
-  commentData: { text: string };
-  token: string;
-  postId: string;
-}
-interface deleteComment {
-  token: string;
-  postId: string;
-  commentId: string;
-}
+
 export const getAllPosts = createAsyncThunk(
   "posts/getallPosts",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/api/posts");
+      const response = await getPostsService();
       return response.data as postsType;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -37,11 +33,7 @@ export const createPost = createAsyncThunk(
   "posts/createPost",
   async ({ token, postContent }: postRequest, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "/api/posts",
-        { postData: postContent },
-        { headers: { authorization: token } }
-      );
+      const response = await createPostService({ token, postContent })
       return response.data as postsType;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -52,11 +44,7 @@ export const likePost = createAsyncThunk(
   "posts/like",
   async ({ token, postId }: { token: string; postId: string }, thunkAPI) => {
     try {
-      const { data } = await axios.post(
-        `/api/posts/like/${postId}`,
-        {},
-        { headers: { authorization: token } }
-      );
+      const { data } = await likePostService({token,postId})
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -67,11 +55,7 @@ export const dislikePost = createAsyncThunk(
   "posts/dislike",
   async ({ token, postId }: { token: string; postId: string }, thunkAPI) => {
     try {
-      const { data } = await axios.post(
-        `/api/posts/dislike/${postId}`,
-        {},
-        { headers: { authorization: token } }
-      );
+      const { data } = await dislikePostService({token,postId})
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -82,10 +66,7 @@ export const deletePost = createAsyncThunk(
   "posts/delete",
   async ({ token, postId }: { token: string; postId: string }, thunkAPI) => {
     try {
-      const { data } = await axios.delete(
-        `/api/posts/${postId}`,
-        { headers: { authorization: token } }
-      );
+      const { data } = await deletePostService({token,postId})
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -96,26 +77,19 @@ export const postComment = createAsyncThunk(
   "posts/addComment",
   async ({ commentData, token, postId }: commentRequest, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `/api/comments/add/${postId}`,
-        { commentData },
-        { headers: { authorization: token } }
-      );
+      const response = await addCommentService({commentData,token,postId})
       return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error);
     }
   }
 );
-///api/comments/delete/:postId/:commentId
+
 export const deleteComment = createAsyncThunk(
   "posts/deleteComment",
-  async ({ token, postId, commentId }: deleteComment, thunkAPI) => {
+  async ({ token, postId, commentId }: deleteCommentRequest, thunkAPI) => {
     try {
-      const response = await axios.delete(
-        `/api/comments/delete/${postId}/${commentId}`,
-        { headers: { authorization: token } }
-      );
+      const response = await deleteCommentService({token,postId,commentId})
       return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error);
