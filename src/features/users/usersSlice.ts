@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { user } from "../../app/types";
 import { getUsersService,followUserService,unfollowUserService } from "services/userServices/userServices"; 
-import axios from "axios";
 
 interface users {
   users: user[];
