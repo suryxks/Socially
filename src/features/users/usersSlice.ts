@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { user } from "../../app/types";
-import axios from "axios";
+import { getUsersService,followUserService,unfollowUserService } from "services/userServices/userServices"; 
 
 interface users {
   users: user[];
@@ -12,7 +12,7 @@ export const getUsers = createAsyncThunk(
   "users/getUsers",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/api/users");
+      const response = await getUsersService();
       return response.data as users;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -23,11 +23,7 @@ export const followUser = createAsyncThunk(
   "users/followUser",
   async ({ userId, token }: { userId: string|undefined; token: string }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `/api/users/follow/${userId}`,
-        {},
-        { headers: { authorization: token } }
-      );
+      const response = await followUserService({userId,token})
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,11 +34,7 @@ export const unfollowUser = createAsyncThunk(
   "users/unfollowUser",
   async ({ userId, token }: { userId: string|undefined; token: string }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `/api/users/unfollow/${userId}`,
-        {},
-        { headers: { authorization: token } }
-      );
+      const response = await unfollowUserService({userId,token})
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

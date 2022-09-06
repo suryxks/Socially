@@ -1,8 +1,7 @@
 import { RootState } from "app/store";
-import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { post } from "app/types";
-
+import {getAllBookmarksService,addToBookmarkService,removeFromBookmarksService} from "services/postServices/bookmarkServices"
 type bookMarksType = {
   bookmarks: post[];
 };
@@ -13,9 +12,7 @@ export const getAllBookmarks = createAsyncThunk(
   "bookmarks/getBookMarks",
   async (token: string, thunkAPI) => {
     try {
-      const response = await axios.get(`/api/users/bookmark`, {
-        headers: { authorization: token },
-      });
+      const response = await getAllBookmarksService(token)
       return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error);
@@ -26,11 +23,7 @@ export const addToBookmarks = createAsyncThunk(
   "bookmarks/addToBookMarks",
   async ({ token, postId }: { token: string; postId: string }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `/api/users/bookmark/${postId}`,
-        {},
-        { headers: { authorization: token } }
-      );
+      const response = await addToBookmarkService({token,postId})
       return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error);
@@ -41,13 +34,7 @@ export const removeFromBookmarks = createAsyncThunk(
   "bookmarks/removeFromBookMarks",
   async ({ token, postId }: { token: string; postId: string }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `/api/users/remove-bookmark/${postId}`,
-        {},
-        {
-          headers: { authorization: token },
-        }
-      );
+      const response = await removeFromBookmarksService({token,postId})
       return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error);

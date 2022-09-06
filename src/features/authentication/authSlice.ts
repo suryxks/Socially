@@ -5,16 +5,14 @@ import {
   authApiReturnValue,
   signUpdata,
   signupApiRetunValue,
+  editData,
 } from "../../app/types";
+import {
+  loginService,
+  signupService,
+  editUserService,
+} from "services/authServices";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import axios from "axios";
-
-type editData = {
-  website: string;
-  bio: string;
-  avatarURL: string;
-};
 const initialState: authState = {
   userData: null,
   username: "",
@@ -26,7 +24,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userDetails: authFormData, thunkAPI) => {
     try {
-      const respnse = await axios.post("/api/auth/login", userDetails);
+      const respnse = await loginService(userDetails);
       return respnse.data as authApiReturnValue;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -37,7 +35,7 @@ export const signup = createAsyncThunk(
   "auth/signup",
   async (userDetails: signUpdata, thunkAPI) => {
     try {
-      const respnse = await axios.post("/api/auth/signup", userDetails);
+      const respnse = await signupService(userDetails);
       return respnse.data as signupApiRetunValue;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -51,10 +49,7 @@ export const editUser = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const respnse = await axios.post("/api/users/edit", userDetails, {
-        headers: { authorization: token },
-      });
-
+      const respnse = await editUserService({ userDetails, token });
       return respnse.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

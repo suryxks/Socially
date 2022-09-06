@@ -68,3 +68,22 @@ export interface follwingUserData {
   username: string,
   avatarURL: string,
 }
+export type editData = {
+  website: string;
+  bio: string;
+  avatarURL: string;
+};
+export type postRequest = {
+  token: string;
+  postContent: string;
+};
+export interface commentRequest {
+  commentData: { text: string };
+  token: string;
+  postId: string;
+}
+export interface deleteCommentRequest {
+  token: string;
+  postId: string;
+  commentId: string;
+}
