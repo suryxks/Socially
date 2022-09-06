@@ -21,9 +21,6 @@ export const createPostService = async ({ token, postContent }: postRequest) => 
         { headers: { authorization: token } }
     );
 }
-
-
-
 export const addCommentService = async ({ commentData, token, postId }: commentRequest) => {
     return await axios.post(
         `/api/comments/add/${postId}`,

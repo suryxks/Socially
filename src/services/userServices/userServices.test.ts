@@ -1,44 +1,10 @@
-import { getUsersService, followUserService,unfollowUserService } from "./userServices";
 import axios from "axios";
-
+import { getUsersService, followUserService, unfollowUserService } from "./userServices";
+import {user1,user2} from '../mockData'
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-const user1 = {
-  _id: "1",
-  firstName: "jonh",
-  lastName: "Doe",
-  username: "johndoe",
-  password: "john1234doe",
-  createdAt: "04/09/2022",
-  updatedAt: "04/09/2022",
-  email: "jonhdoe@gmail.com",
-  avatarURL: "avatarUrl",
-  followers: [],
-  following: [],
-  bookmarks: [],
-  bio: "bio",
-  website: "https://johndoe.com",
-  id: "1",
-};
 const userId = "1";
 const token = "abacdefg";
-const user2 = {
-  _id: "2",
-  firstName: "adarsh",
-  lastName: "balika",
-  username: "adarshbalika",
-  password: "adarsh1234balika",
-  createdAt: "04/09/2022",
-  updatedAt: "04/09/2022",
-  email: "adarshbalika@gmail.com",
-  avatarURL: "avatarUrl",
-  followers: [],
-  following: [],
-  bookmarks: [],
-  bio: "bio",
-  website: "https://adarshbalika.com",
-  id: "2",
-};
 const users = [user1, user2];
 
 const followResponse = {
