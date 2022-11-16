@@ -1,3 +1,4 @@
+### Socially
 Socially is a social media app to share ideas and make friends online.
 
 
